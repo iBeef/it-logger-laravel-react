@@ -1,34 +1,39 @@
 {
-    "private": true,
-    "scripts": {
-        "dev": "npm run development",
-        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "watch": "npm run development -- --watch",
-        "watch-json": "concurrently \"npm run development -- --watch\" \"npm run json-server\"",
-        "watch-poll": "npm run watch -- --watch-poll",
-        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "json-server": "json-server --watch db.json --port 5000"
-    },
-    "devDependencies": {
-        "@babel/plugin-proposal-class-properties": "^7.7.4",
-        "@babel/preset-react": "^7.0.0",
-        "axios": "^0.19",
-        "bootstrap": "^4.0.0",
-        "cross-env": "^7.0",
-        "jquery": "^3.2",
-        "laravel-mix": "^5.0.1",
-        "lodash": "^4.17.13",
-        "popper.js": "^1.12",
-        "react": "^16.2.0",
-        "react-dom": "^16.2.0",
-        "resolve-url-loader": "^3.1.0",
-        "sass": "^1.15.2",
-        "sass-loader": "^8.0.0"
-    },
-    "dependencies": {
-        "concurrently": "^5.2.0",
-        "json-server": "^0.16.1"
-    }
+  "private": true,
+  "scripts": {
+    "dev": "npm run development",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "npm run development -- --watch",
+    "json-watch": "concurrently \"npm run development -- --watch\" \"npm run json-server\"",
+    "watch-poll": "npm run watch -- --watch-poll",
+    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "npm run production",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "json-server": "json-server --watch db.json --port 3000"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/preset-react": "^7.0.0",
+    "axios": "^0.19",
+    "bootstrap": "^4.0.0",
+    "cross-env": "^7.0",
+    "jquery": "^3.2",
+    "laravel-mix": "^5.0.1",
+    "laravel-mix-ignore": "^1.0.1",
+    "lodash": "^4.17.13",
+    "popper.js": "^1.12",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "resolve-url-loader": "^3.1.0",
+    "sass": "^1.15.2",
+    "sass-loader": "^8.0.0"
+  },
+  "dependencies": {
+    "concurrently": "^5.2.0",
+    "json-server": "^0.16.1",
+    "materialize-css": "^1.0.0",
+    "moment": "2.18.1",
+    "react-moment": "^0.9.7"
+  },
+  "proxy": "http://localhost:3000"
 }
