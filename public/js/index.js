@@ -69070,6 +69070,46 @@ var App = function App() {
 
 /***/ }),
 
+/***/ "./resources/js/actions/types.js":
+/*!***************************************!*\
+  !*** ./resources/js/actions/types.js ***!
+  \***************************************/
+/*! exports provided: GET_LOGS, ADD_LOG, DELETE_LOG, SET_CURRENT, CLEAR_CURRENT, UPDATE_LOG, CLEAR_LOGS, SET_LOADING, LOGS_ERROR, SEARCH_LOGS, GET_TECHS, ADD_TECH, DELETE_TECH, TECHS_ERROR */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_LOGS", function() { return GET_LOGS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_LOG", function() { return ADD_LOG; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DELETE_LOG", function() { return DELETE_LOG; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_CURRENT", function() { return SET_CURRENT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CLEAR_CURRENT", function() { return CLEAR_CURRENT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LOG", function() { return UPDATE_LOG; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CLEAR_LOGS", function() { return CLEAR_LOGS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_LOADING", function() { return SET_LOADING; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOGS_ERROR", function() { return LOGS_ERROR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SEARCH_LOGS", function() { return SEARCH_LOGS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_TECHS", function() { return GET_TECHS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_TECH", function() { return ADD_TECH; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DELETE_TECH", function() { return DELETE_TECH; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TECHS_ERROR", function() { return TECHS_ERROR; });
+var GET_LOGS = 'GET_LOGS';
+var ADD_LOG = 'ADD_LOG';
+var DELETE_LOG = 'DELETE_LOG';
+var SET_CURRENT = 'SET_CURRENT';
+var CLEAR_CURRENT = 'CLEAR_CURRENT';
+var UPDATE_LOG = 'UPDATE_LOG';
+var CLEAR_LOGS = 'CLEAR_LOGS';
+var SET_LOADING = 'SET_LOADING';
+var LOGS_ERROR = 'LOGS_ERROR';
+var SEARCH_LOGS = 'SEARCH_LOGS';
+var GET_TECHS = 'GET_TECHS';
+var ADD_TECH = 'ADD_TECH';
+var DELETE_TECH = 'DELETE_TECH';
+var TECHS_ERROR = 'TECHS_ERROR';
+
+/***/ }),
+
 /***/ "./resources/js/bootstrap.js":
 /*!***********************************!*\
   !*** ./resources/js/bootstrap.js ***!
@@ -69892,8 +69932,64 @@ react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render( /*#__PURE__*/react__WEB
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var _logReducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./logReducer */ "./resources/js/reducers/logReducer.js");
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({}));
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
+  log: _logReducer__WEBPACK_IMPORTED_MODULE_1__["default"]
+}));
+
+/***/ }),
+
+/***/ "./resources/js/reducers/logReducer.js":
+/*!*********************************************!*\
+  !*** ./resources/js/reducers/logReducer.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/types */ "./resources/js/actions/types.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+var initialState = {
+  logs: null,
+  current: null,
+  loading: false,
+  error: null
+};
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions_types__WEBPACK_IMPORTED_MODULE_0__["GET_LOGS"]:
+      return _objectSpread({}, state, {
+        logs: action.payload,
+        loading: false
+      });
+
+    case _actions_types__WEBPACK_IMPORTED_MODULE_0__["SET_LOADING"]:
+      return _objectSpread({}, state, {
+        loading: true
+      });
+
+    case _actions_types__WEBPACK_IMPORTED_MODULE_0__["LOGS_ERROR"]:
+      console.error(action.payload);
+      return _objectSpread({}, state, {
+        error: action.payload
+      });
+
+    default:
+      return state;
+  }
+});
 
 /***/ }),
 
