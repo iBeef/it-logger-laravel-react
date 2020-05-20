@@ -1,6 +1,6 @@
 import { GET_LOGS, SET_LOADING, LOGS_ERROR } from './types';
 
-import { proxy } from '../../utils/proxy';
+import { proxy } from '../utils/proxy';
 
 // export const getLogs = () => {
 //   return async (dispatch, getState) => {
@@ -15,7 +15,8 @@ import { proxy } from '../../utils/proxy';
 //   };
 // };
 
-export const getLogs = () => async dipatch => {
+// Get logs form server
+export const getLogs = () => async dispatch => {
   try {
     setLoading();
     const res = await fetch(proxy('/logs'));
