@@ -1,25 +1,25 @@
 {
   "logs": [
     {
-      "id": "1",
-      "message": "Workstation 050 not working.",
+      "message": "Change network card in server 007",
       "attention": true,
-      "date": "03-02-2020",
-      "tech": "Sam Smith"
+      "tech": "Sara Wilson",
+      "date": "2020-05-21T08:25:41.089Z",
+      "id": 1
     },
     {
-      "id": "2",
-      "message": "Changed memory on workstation 067",
-      "attention": false,
-      "date": "04-06-2020",
-      "tech": "John Doe"
+      "message": "HDD failed in workstation 002",
+      "attention": true,
+      "tech": "John Doe",
+      "date": "2020-05-21T08:33:48.002Z",
+      "id": 2
     },
     {
-      "id": "3",
-      "message": "Workstation 098 needs a nds hdd",
-      "attention": false,
-      "date": "04-07-2020",
-      "tech": "Sara Wilson"
+      "message": "1122 wireless down",
+      "attention": true,
+      "tech": "Sam Smith",
+      "date": "2020-05-21T08:34:10.142Z",
+      "id": 3
     }
   ],
   "techs": [

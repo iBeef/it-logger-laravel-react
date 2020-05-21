@@ -69074,12 +69074,13 @@ var App = function App() {
 /*!********************************************!*\
   !*** ./resources/js/actions/logActions.js ***!
   \********************************************/
-/*! exports provided: getLogs, setLoading */
+/*! exports provided: getLogs, addLog, setLoading */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getLogs", function() { return getLogs; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addLog", function() { return addLog; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setLoading", function() { return setLoading; });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
@@ -69150,6 +69151,61 @@ var getLogs = function getLogs() {
 
     return function (_x) {
       return _ref.apply(this, arguments);
+    };
+  }();
+}; // Add new log
+
+var addLog = function addLog(log) {
+  return /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(dispatch) {
+      var res, data;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              setLoading();
+              _context2.next = 4;
+              return fetch(Object(_utils_proxy__WEBPACK_IMPORTED_MODULE_2__["proxy"])('/logs'), {
+                method: 'POST',
+                body: JSON.stringify(log),
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              });
+
+            case 4:
+              res = _context2.sent;
+              _context2.next = 7;
+              return res.json();
+
+            case 7:
+              data = _context2.sent;
+              dispatch({
+                type: _types__WEBPACK_IMPORTED_MODULE_1__["ADD_LOG"],
+                payload: data
+              });
+              _context2.next = 14;
+              break;
+
+            case 11:
+              _context2.prev = 11;
+              _context2.t0 = _context2["catch"](0);
+              dispatch({
+                type: _types__WEBPACK_IMPORTED_MODULE_1__["LOGS_ERROR"],
+                payload: _context2.t0.response.data
+              });
+
+            case 14:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[0, 11]]);
+    }));
+
+    return function (_x2) {
+      return _ref2.apply(this, arguments);
     };
   }();
 }; // Set loading to true
@@ -69348,8 +69404,12 @@ var SearchBar = function SearchBar() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! materialize-css/dist/js/materialize.min.js */ "./node_modules/materialize-css/dist/js/materialize.min.js");
-/* harmony import */ var materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _actions_logActions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/logActions */ "./resources/js/actions/logActions.js");
+/* harmony import */ var materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! materialize-css/dist/js/materialize.min.js */ "./node_modules/materialize-css/dist/js/materialize.min.js");
+/* harmony import */ var materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_4__);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -69365,7 +69425,12 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var AddLogModal = function AddLogModal() {
+
+
+
+var AddLogModal = function AddLogModal(_ref) {
+  var addLog = _ref.addLog;
+
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
       _useState2 = _slicedToArray(_useState, 2),
       message = _useState2[0],
@@ -69383,11 +69448,20 @@ var AddLogModal = function AddLogModal() {
 
   var onSubmit = function onSubmit() {
     if (message === '' || tech === '') {
-      materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_1___default.a.toast({
+      materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_4___default.a.toast({
         html: 'Please enter a message and tech'
       });
     } else {
-      console.log(message, tech, attention); // Clear fields
+      var newLog = {
+        message: message,
+        attention: attention,
+        tech: tech,
+        date: new Date()
+      };
+      addLog(newLog);
+      materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_4___default.a.toast({
+        html: "Log added by ".concat(tech)
+      }); // Clear fields
 
       setMessage('');
       setTech('');
@@ -69456,11 +69530,16 @@ var AddLogModal = function AddLogModal() {
   }, "Enter")));
 };
 
+AddLogModal.propTypes = {
+  addLog: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func.isRequired
+};
 var modalStyle = {
   width: '75%',
   height: '75%'
 };
-/* harmony default export */ __webpack_exports__["default"] = (AddLogModal);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, {
+  addLog: _actions_logActions__WEBPACK_IMPORTED_MODULE_3__["addLog"]
+})(AddLogModal));
 
 /***/ }),
 
@@ -69700,7 +69779,8 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 Logs.propTypes = {
-  log: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object.isRequired
+  log: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object.isRequired,
+  getLogs: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func.isRequired
 };
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, {
   getLogs: _actions_logActions__WEBPACK_IMPORTED_MODULE_5__["getLogs"]
@@ -69999,6 +70079,18 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/types */ "./resources/js/actions/types.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -70020,6 +70112,12 @@ var initialState = {
     case _actions_types__WEBPACK_IMPORTED_MODULE_0__["GET_LOGS"]:
       return _objectSpread({}, state, {
         logs: action.payload,
+        loading: false
+      });
+
+    case _actions_types__WEBPACK_IMPORTED_MODULE_0__["ADD_LOG"]:
+      return _objectSpread({}, state, {
+        logs: [].concat(_toConsumableArray(state.logs), [action.payload]),
         loading: false
       });
 
