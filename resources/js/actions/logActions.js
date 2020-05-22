@@ -1,4 +1,10 @@
-import { GET_LOGS, SET_LOADING, LOGS_ERROR, ADD_LOG } from './types';
+import {
+  GET_LOGS,
+  SET_LOADING,
+  LOGS_ERROR,
+  ADD_LOG,
+  DELETE_LOG
+} from './types';
 
 import { proxy } from '../utils/proxy';
 
@@ -32,6 +38,7 @@ export const getLogs = () => async dispatch => {
     });
   }
 };
+
 // Add new log
 export const addLog = log => async dispatch => {
   try {
@@ -47,6 +54,25 @@ export const addLog = log => async dispatch => {
     dispatch({
       type: ADD_LOG,
       payload: data
+    });
+  } catch (err) {
+    dispatch({
+      type: LOGS_ERROR,
+      payload: err.response.data
+    });
+  }
+};
+
+// Delete log from server
+// Get logs form server
+export const deleteLog = id => async dispatch => {
+  try {
+    setLoading();
+    const res = await fetch(proxy(`/logs/${id}`), { method: 'DELETE' });
+    const data = await res.json();
+    dispatch({
+      type: DELETE_LOG,
+      payload: id
     });
   } catch (err) {
     dispatch({

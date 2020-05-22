@@ -69074,13 +69074,14 @@ var App = function App() {
 /*!********************************************!*\
   !*** ./resources/js/actions/logActions.js ***!
   \********************************************/
-/*! exports provided: getLogs, addLog, setLoading */
+/*! exports provided: getLogs, addLog, deleteLog, setLoading */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getLogs", function() { return getLogs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addLog", function() { return addLog; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteLog", function() { return deleteLog; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setLoading", function() { return setLoading; });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
@@ -69206,6 +69207,58 @@ var addLog = function addLog(log) {
 
     return function (_x2) {
       return _ref2.apply(this, arguments);
+    };
+  }();
+}; // Delete log from server
+// Get logs form server
+
+var deleteLog = function deleteLog(id) {
+  return /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(dispatch) {
+      var res, data;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              setLoading();
+              _context3.next = 4;
+              return fetch(Object(_utils_proxy__WEBPACK_IMPORTED_MODULE_2__["proxy"])("/logs/".concat(id)), {
+                method: 'DELETE'
+              });
+
+            case 4:
+              res = _context3.sent;
+              _context3.next = 7;
+              return res.json();
+
+            case 7:
+              data = _context3.sent;
+              dispatch({
+                type: _types__WEBPACK_IMPORTED_MODULE_1__["DELETE_LOG"],
+                payload: id
+              });
+              _context3.next = 14;
+              break;
+
+            case 11:
+              _context3.prev = 11;
+              _context3.t0 = _context3["catch"](0);
+              dispatch({
+                type: _types__WEBPACK_IMPORTED_MODULE_1__["LOGS_ERROR"],
+                payload: _context3.t0.response.data
+              });
+
+            case 14:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, null, [[0, 11]]);
+    }));
+
+    return function (_x3) {
+      return _ref3.apply(this, arguments);
     };
   }();
 }; // Set loading to true
@@ -69681,16 +69734,32 @@ var modalStyle = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react_moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-moment */ "./node_modules/react-moment/dist/index.js");
 /* harmony import */ var react_moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_moment__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! materialize-css/dist/js/materialize.min.js */ "./node_modules/materialize-css/dist/js/materialize.min.js");
+/* harmony import */ var materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _actions_logActions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/logActions */ "./resources/js/actions/logActions.js");
+
+
+
 
 
 
 
 var LogItem = function LogItem(_ref) {
-  var log = _ref.log;
+  var log = _ref.log,
+      deleteLog = _ref.deleteLog;
+
+  var onDelete = function onDelete() {
+    deleteLog(log.id);
+    materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_4___default.a.toast({
+      html: 'Log Deleted'
+    });
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "collection-item"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -69706,16 +69775,20 @@ var LogItem = function LogItem(_ref) {
     format: "MMMM Do YYYY, h:mm:ss a"
   }, log.date)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     href: "#!",
-    className: "secondary-content"
+    className: "secondary-content",
+    onClick: onDelete
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "material-icons grey-text"
   }, "delete"))));
 };
 
 LogItem.propTypes = {
-  log: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired
+  log: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.object.isRequired,
+  deleteLog: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.func.isRequired
 };
-/* harmony default export */ __webpack_exports__["default"] = (LogItem);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, {
+  deleteLog: _actions_logActions__WEBPACK_IMPORTED_MODULE_5__["deleteLog"]
+})(LogItem));
 
 /***/ }),
 
@@ -70118,6 +70191,14 @@ var initialState = {
     case _actions_types__WEBPACK_IMPORTED_MODULE_0__["ADD_LOG"]:
       return _objectSpread({}, state, {
         logs: [].concat(_toConsumableArray(state.logs), [action.payload]),
+        loading: false
+      });
+
+    case _actions_types__WEBPACK_IMPORTED_MODULE_0__["DELETE_LOG"]:
+      return _objectSpread({}, state, {
+        logs: state.logs.filter(function (log) {
+          return log.id !== action.payload;
+        }),
         loading: false
       });
 
