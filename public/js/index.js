@@ -69074,7 +69074,7 @@ var App = function App() {
 /*!********************************************!*\
   !*** ./resources/js/actions/logActions.js ***!
   \********************************************/
-/*! exports provided: getLogs, addLog, deleteLog, setLoading */
+/*! exports provided: getLogs, addLog, deleteLog, updateLog, setCurrent, clearCurrent, setLoading */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -69082,6 +69082,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getLogs", function() { return getLogs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addLog", function() { return addLog; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteLog", function() { return deleteLog; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLog", function() { return updateLog; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setCurrent", function() { return setCurrent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearCurrent", function() { return clearCurrent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setLoading", function() { return setLoading; });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
@@ -69210,12 +69213,11 @@ var addLog = function addLog(log) {
     };
   }();
 }; // Delete log from server
-// Get logs form server
 
 var deleteLog = function deleteLog(id) {
   return /*#__PURE__*/function () {
     var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(dispatch) {
-      var res, data;
+      var res;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
@@ -69229,38 +69231,101 @@ var deleteLog = function deleteLog(id) {
 
             case 4:
               res = _context3.sent;
-              _context3.next = 7;
-              return res.json();
-
-            case 7:
-              data = _context3.sent;
               dispatch({
                 type: _types__WEBPACK_IMPORTED_MODULE_1__["DELETE_LOG"],
                 payload: id
               });
-              _context3.next = 14;
+              _context3.next = 11;
               break;
 
-            case 11:
-              _context3.prev = 11;
+            case 8:
+              _context3.prev = 8;
               _context3.t0 = _context3["catch"](0);
               dispatch({
                 type: _types__WEBPACK_IMPORTED_MODULE_1__["LOGS_ERROR"],
                 payload: _context3.t0.response.data
               });
 
-            case 14:
+            case 11:
             case "end":
               return _context3.stop();
           }
         }
-      }, _callee3, null, [[0, 11]]);
+      }, _callee3, null, [[0, 8]]);
     }));
 
     return function (_x3) {
       return _ref3.apply(this, arguments);
     };
   }();
+}; // Update log on server
+
+var updateLog = function updateLog(log) {
+  return /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(dispatch) {
+      var res, data;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.prev = 0;
+              setLoading();
+              _context4.next = 4;
+              return fetch(Object(_utils_proxy__WEBPACK_IMPORTED_MODULE_2__["proxy"])("/logs/".concat(log.id)), {
+                method: 'PUT',
+                body: JSON.stringify(log),
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              });
+
+            case 4:
+              res = _context4.sent;
+              _context4.next = 7;
+              return res.json();
+
+            case 7:
+              data = _context4.sent;
+              dispatch({
+                type: _types__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LOG"],
+                payload: data
+              });
+              _context4.next = 14;
+              break;
+
+            case 11:
+              _context4.prev = 11;
+              _context4.t0 = _context4["catch"](0);
+              dispatch({
+                type: _types__WEBPACK_IMPORTED_MODULE_1__["LOGS_ERROR"],
+                payload: _context4.t0.response.data
+              });
+
+            case 14:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4, null, [[0, 11]]);
+    }));
+
+    return function (_x4) {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+}; // Set current log
+
+var setCurrent = function setCurrent(log) {
+  return {
+    type: _types__WEBPACK_IMPORTED_MODULE_1__["SET_CURRENT"],
+    payload: log
+  };
+}; // Clear current log
+
+var clearCurrent = function clearCurrent() {
+  return {
+    type: _types__WEBPACK_IMPORTED_MODULE_1__["CLEAR_CURRENT"]
+  };
 }; // Set loading to true
 
 var setLoading = function setLoading() {
@@ -69607,8 +69672,12 @@ var modalStyle = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! materialize-css/dist/js/materialize.min.js */ "./node_modules/materialize-css/dist/js/materialize.min.js");
-/* harmony import */ var materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _actions_logActions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/logActions */ "./resources/js/actions/logActions.js");
+/* harmony import */ var materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! materialize-css/dist/js/materialize.min.js */ "./node_modules/materialize-css/dist/js/materialize.min.js");
+/* harmony import */ var materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_4__);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -69624,7 +69693,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var EditLogModal = function EditLogModal() {
+
+
+
+var EditLogModal = function EditLogModal(_ref) {
+  var current = _ref.current,
+      updateLog = _ref.updateLog;
+
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
       _useState2 = _slicedToArray(_useState, 2),
       message = _useState2[0],
@@ -69640,13 +69715,29 @@ var EditLogModal = function EditLogModal() {
       tech = _useState6[0],
       setTech = _useState6[1];
 
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (current) {
+      setMessage(current.message), setAttention(current.attention), setTech(current.tech);
+    }
+  }, [current]);
+
   var onSubmit = function onSubmit() {
     if (message === '' || tech === '') {
-      materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_1___default.a.toast({
+      materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_4___default.a.toast({
         html: 'Please enter a message and tech'
       });
     } else {
-      console.log(message, tech, attention); // Clear fields
+      var updatedLog = {
+        id: current.id,
+        message: message,
+        attention: attention,
+        tech: tech,
+        date: new Date()
+      };
+      updateLog(updatedLog);
+      materialize_css_dist_js_materialize_min_js__WEBPACK_IMPORTED_MODULE_4___default.a.toast({
+        html: "Log updated by ".concat(tech)
+      }); // Clear fields
 
       setMessage('');
       setTech('');
@@ -69671,10 +69762,7 @@ var EditLogModal = function EditLogModal() {
     onChange: function onChange(e) {
       return setMessage(e.target.value);
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-    htmlFor: "message",
-    className: "active"
-  }, "Log Message"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "row"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "input-field"
@@ -69719,7 +69807,20 @@ var modalStyle = {
   width: '75%',
   height: '75%'
 };
-/* harmony default export */ __webpack_exports__["default"] = (EditLogModal);
+EditLogModal.propTypes = {
+  current: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object,
+  updateLog: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func.isRequired
+};
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    current: state.log.current
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, {
+  updateLog: _actions_logActions__WEBPACK_IMPORTED_MODULE_3__["updateLog"]
+})(EditLogModal));
 
 /***/ }),
 
@@ -69751,7 +69852,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var LogItem = function LogItem(_ref) {
   var log = _ref.log,
-      deleteLog = _ref.deleteLog;
+      deleteLog = _ref.deleteLog,
+      setCurrent = _ref.setCurrent;
 
   var onDelete = function onDelete() {
     deleteLog(log.id);
@@ -69764,7 +69866,10 @@ var LogItem = function LogItem(_ref) {
     className: "collection-item"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     href: "#edit-log-modal",
-    className: "modal-trigger ".concat(log.attention ? 'red-text' : 'blue-text')
+    className: "modal-trigger ".concat(log.attention ? 'red-text' : 'blue-text'),
+    onClick: function onClick() {
+      return setCurrent(log);
+    }
   }, log.message), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "grey-text"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -69784,10 +69889,12 @@ var LogItem = function LogItem(_ref) {
 
 LogItem.propTypes = {
   log: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.object.isRequired,
-  deleteLog: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.func.isRequired
+  deleteLog: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.func.isRequired,
+  setCurrent: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.func.isRequired
 };
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, {
-  deleteLog: _actions_logActions__WEBPACK_IMPORTED_MODULE_5__["deleteLog"]
+  deleteLog: _actions_logActions__WEBPACK_IMPORTED_MODULE_5__["deleteLog"],
+  setCurrent: _actions_logActions__WEBPACK_IMPORTED_MODULE_5__["setCurrent"]
 })(LogItem));
 
 /***/ }),
@@ -70202,6 +70309,23 @@ var initialState = {
         loading: false
       });
 
+    case _actions_types__WEBPACK_IMPORTED_MODULE_0__["UPDATE_LOG"]:
+      return _objectSpread({}, state, {
+        logs: state.logs.map(function (log) {
+          return log.id === action.payload.id ? action.payload : log;
+        })
+      });
+
+    case _actions_types__WEBPACK_IMPORTED_MODULE_0__["SET_CURRENT"]:
+      return _objectSpread({}, state, {
+        current: action.payload
+      });
+
+    case _actions_types__WEBPACK_IMPORTED_MODULE_0__["CLEAR_CURRENT"]:
+      return _objectSpread({}, state, {
+        current: null
+      });
+
     case _actions_types__WEBPACK_IMPORTED_MODULE_0__["SET_LOADING"]:
       return _objectSpread({}, state, {
         loading: true
@@ -70268,7 +70392,7 @@ var proxy = function proxy(link) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /srv/http/it-logger-laravel-react/resources/js/index.js */"./resources/js/index.js");
+module.exports = __webpack_require__(/*! /Users/ibeef/Programming/Web_Dev/PHP_Sites/it-logger-laravel-react/resources/js/index.js */"./resources/js/index.js");
 
 
 /***/ })

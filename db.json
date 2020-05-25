@@ -1,11 +1,11 @@
 {
   "logs": [
     {
-      "message": "HDD failed in workstation 002",
-      "attention": true,
+      "id": 1,
+      "message": "Fixed HDD 003",
+      "attention": false,
       "tech": "John Doe",
-      "date": "2020-05-21T08:33:48.002Z",
-      "id": 2
+      "date": "2020-05-25T21:46:50.998Z"
     }
   ],
   "techs": [
