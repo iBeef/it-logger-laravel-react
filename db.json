@@ -6,23 +6,42 @@
       "attention": false,
       "tech": "John Doe",
       "date": "2020-05-25T21:46:50.998Z"
+    },
+    {
+      "id": 2,
+      "message": "Test Log",
+      "attention": true,
+      "tech": "John Doe",
+      "date": "2020-05-29T10:15:17.283Z"
+    },
+    {
+      "id": 3,
+      "message": "Another Test Log",
+      "attention": true,
+      "tech": "Brad Traversy",
+      "date": "2020-05-29T12:26:25.557Z"
     }
   ],
   "techs": [
     {
-      "id": 1,
-      "firstName": "John",
-      "lastName": "Doe"
-    },
-    {
-      "id": 2,
-      "firstName": "Sam",
-      "lastName": "Smith"
-    },
-    {
       "id": 3,
       "firstName": "Sara",
       "lastName": "Wilson"
+    },
+    {
+      "firstName": "Brad",
+      "lastName": "Traversy",
+      "id": 4
+    },
+    {
+      "firstName": "Lewis",
+      "lastName": "Holmes",
+      "id": 5
+    },
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "id": 6
     }
   ]
 }

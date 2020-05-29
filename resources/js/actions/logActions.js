@@ -1,5 +1,6 @@
 import {
   GET_LOGS,
+  SEARCH_LOGS,
   SET_LOADING,
   LOGS_ERROR,
   ADD_LOG,
@@ -24,7 +25,7 @@ import { proxy } from '../utils/proxy';
 //   };
 // };
 
-// Get logs form server
+// Get logs from server
 export const getLogs = () => async dispatch => {
   try {
     setLoading();
@@ -37,7 +38,7 @@ export const getLogs = () => async dispatch => {
   } catch (err) {
     dispatch({
       type: LOGS_ERROR,
-      payload: err.response.data
+      payload: err.response.statusText
     });
   }
 };
@@ -61,7 +62,7 @@ export const addLog = log => async dispatch => {
   } catch (err) {
     dispatch({
       type: LOGS_ERROR,
-      payload: err.response.data
+      payload: err.response.statusText
     });
   }
 };
@@ -78,7 +79,7 @@ export const deleteLog = id => async dispatch => {
   } catch (err) {
     dispatch({
       type: LOGS_ERROR,
-      payload: err.response.data
+      payload: err.response.statusText
     });
   }
 };
@@ -102,7 +103,25 @@ export const updateLog = log => async dispatch => {
   } catch (err) {
     dispatch({
       type: LOGS_ERROR,
-      payload: err.response.data
+      payload: err.response.statusText
+    });
+  }
+};
+
+// Search for logs from server
+export const searchLogs = text => async dispatch => {
+  try {
+    setLoading();
+    const res = await fetch(proxy(`/logs?q=${text}`));
+    const data = await res.json();
+    dispatch({
+      type: SEARCH_LOGS,
+      payload: data
+    });
+  } catch (err) {
+    dispatch({
+      type: LOGS_ERROR,
+      payload: err.response.statusText
     });
   }
 };
